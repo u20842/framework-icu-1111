@@ -3,1115 +3,393 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICU-1111 · IP Architecture · Framework Library</title>
-<meta name="description" content="The complete intellectual property framework of ICU-1111. The PAST Framework, The DEAL Framework, The Capacity Framework, and the clinical models underneath them.">
+<title>The PAST Framework™ · ICU-1111 · Anju Redheendran</title>
+<meta name="description" content="Why you keep ending up in the same patterns — and the clinical framework that names them. The PAST Framework identifies the patterns. The DEAL Framework maps the way out.">
+<meta property="og:title" content="The PAST Framework™ — Understand Your Patterns">
+<meta property="og:description" content="You're not living in the past. Your past is living in you. The diagnostic framework behind the work of ICU-1111.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
-:root {
-  --navy: #0a1628;
-  --navy-mid: #0f1e38;
-  --navy-light: #162540;
-  --teal: #00c8b4;
-  --teal-dim: rgba(0,200,180,0.12);
-  --teal-glow: rgba(0,200,180,0.06);
-  --gold: #c9a84c;
-  --gold-dim: rgba(201,168,76,0.15);
-  --rust: #c85a3c;
-  --rust-dim: rgba(200,90,60,0.12);
-  --sage: #4a8a6a;
-  --sage-dim: rgba(74,138,106,0.12);
-  --text-primary: #e8e4dc;
-  --text-muted: rgba(232,228,220,0.55);
-  --text-dim: rgba(232,228,220,0.32);
-  --border: rgba(232,228,220,0.07);
-  --border-bright: rgba(232,228,220,0.14);
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0a1628;--navy-mid:#111e35;--navy-soft:#1a2d4a;
+  --teal:#00c8b4;--teal-dim:rgba(0,200,180,0.15);--teal-glow:rgba(0,200,180,0.07);
+  --gold:#c9a84c;--gold-dim:rgba(201,168,76,0.15);
+  --cream:#f0ebe0;--cream-dim:rgba(240,235,224,0.06);
+  --text:#e8e2d9;--text-mid:rgba(232,226,217,0.65);--text-light:rgba(232,226,217,0.35);
+  --border:rgba(232,226,217,0.08);--border-mid:rgba(232,226,217,0.14);
+  /* PAST-coded accent palette (matches Body Speaks) */
+  --P:#00c8b4;--A:#c9a84c;--S:#e07060;--T:#8b7ec8;
+  --font-display:'Cormorant Garamond',serif;
+  --font-body:'Montserrat',sans-serif;
+  --font-mono:'Space Mono',monospace;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+  --max-w:1080px;
 }
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--text);font-family:var(--font-body);font-weight:300;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.container{width:90%;max-width:var(--max-w);margin:0 auto;}
+a{text-decoration:none;color:inherit;}
+em{font-style:italic;}
 
-html { scroll-behavior: smooth; }
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 0;transition:background var(--transition),padding var(--transition);}
+nav.scrolled{background:rgba(10,22,40,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:0.65rem 0;border-bottom:1px solid var(--border);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;}
+.nav-logo{display:flex;flex-direction:column;line-height:1.1;}
+.nav-logo-name{font-family:var(--font-display);font-size:1.1rem;font-weight:500;letter-spacing:0.04em;color:var(--cream);}
+.nav-logo-title{font-size:0.55rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-light);}
+.nav-cta{font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;padding:0.65rem 1.4rem;background:transparent;border:1px solid var(--teal);color:var(--teal);border-radius:2px;transition:all var(--transition);white-space:nowrap;}
+.nav-cta:hover{background:var(--teal);color:var(--navy);}
 
-body {
-  background: var(--navy);
-  color: var(--text-primary);
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  line-height: 1.7;
-  overflow-x: hidden;
-}
+/* ── HERO ── */
+.hero{padding:9rem 0 5rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:120%;height:80%;background:radial-gradient(ellipse at center,var(--teal-glow) 0%,transparent 60%);pointer-events:none;}
+.hero-inner{position:relative;max-width:760px;margin:0 auto;}
+.eyebrow{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);margin-bottom:1.75rem;}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.6rem,7vw,4.6rem);font-weight:300;line-height:1.08;letter-spacing:-0.01em;margin-bottom:1.5rem;color:var(--cream);}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:clamp(0.95rem,2vw,1.1rem);color:var(--text-mid);line-height:1.8;max-width:600px;margin:0 auto 2.5rem;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;padding:1rem 2rem;border-radius:2px;transition:all var(--transition);cursor:pointer;white-space:nowrap;}
+.btn-primary{background:var(--teal);color:var(--navy);}
+.btn-primary:hover{background:#00e5cf;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,200,180,0.3);}
+.btn-ghost{background:transparent;border:1px solid var(--border-mid);color:var(--text);}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+.hero-thesis{margin-top:3rem;font-family:var(--font-display);font-style:italic;font-size:clamp(1.1rem,2.4vw,1.4rem);font-weight:300;color:var(--text-mid);}
+.hero-thesis span{color:var(--gold);}
 
-/* AMBIENT */
-.ambient {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(140px);
-  pointer-events: none;
-  z-index: 0;
-}
-.a1 { width:600px;height:600px;background:radial-gradient(circle,rgba(0,200,180,0.05) 0%,transparent 70%);top:-150px;left:-150px;animation:d1 25s ease-in-out infinite alternate; }
-.a2 { width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,0.04) 0%,transparent 70%);bottom:0;right:-100px;animation:d2 30s ease-in-out infinite alternate; }
-@keyframes d1{to{transform:translate(80px,100px);}}
-@keyframes d2{to{transform:translate(-80px,-60px);}}
+/* ── SECTION SHELL ── */
+.section{padding:5rem 0;}
+.section-label{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--teal);text-align:center;margin-bottom:1rem;}
+.section-h2{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);font-weight:300;color:var(--cream);line-height:1.18;text-align:center;margin-bottom:1.25rem;}
+.section-h2 em{font-style:italic;color:var(--teal);}
+.section-intro{max-width:620px;margin:0 auto 3.5rem;text-align:center;color:var(--text-mid);font-size:0.95rem;line-height:1.85;}
+.divider{width:40px;height:1px;background:var(--gold);margin:1.5rem auto 0;}
 
-/* LAYOUT */
-.wrap { position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 2rem; }
+/* ── THESIS ── */
+.thesis{background:var(--navy-mid);}
+.thesis-body{max-width:680px;margin:0 auto;}
+.thesis-body p{color:var(--text-mid);font-size:1rem;line-height:1.95;margin-bottom:1.5rem;text-align:center;}
+.thesis-body p strong{color:var(--text);font-weight:500;}
+.thesis-pull{font-family:var(--font-display);font-style:italic;font-size:clamp(1.3rem,3vw,1.8rem);font-weight:300;color:var(--cream);text-align:center;line-height:1.4;margin:1rem auto;}
 
-/* NAV */
-nav {
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(10,22,40,0.88);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  padding:1rem 2rem;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.nav-logo { font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--teal);letter-spacing:0.15em;text-decoration:none; }
-.nav-links { display:flex;gap:2rem;list-style:none; }
-.nav-links a { font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;transition:color 0.3s; }
-.nav-links a:hover { color:var(--teal); }
-.nav-switch { font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;border:1px solid var(--border-bright);padding:0.4rem 0.9rem;transition:all 0.3s; }
-.nav-switch:hover { color:var(--teal);border-color:var(--teal); }
+/* ── FRAMEWORK GRID (PAST / DEAL) ── */
+.fw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:1rem;}
+.fw-card{padding:2rem 1.75rem;border:1px solid var(--border-mid);border-radius:4px;background:var(--cream-dim);position:relative;overflow:hidden;transition:transform var(--transition),border-color var(--transition);}
+.fw-card:hover{transform:translateY(-3px);}
+.fw-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
+.fw-letter{font-family:var(--font-display);font-size:2.8rem;font-weight:600;line-height:1;color:var(--accent);margin-bottom:0.25rem;}
+.fw-name{font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:var(--cream);margin-bottom:0.15rem;}
+.fw-tag{font-size:0.6rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.fw-card p{font-size:0.85rem;color:var(--text-mid);line-height:1.8;margin-bottom:0.85rem;}
+.fw-card p:last-child{margin-bottom:0;}
+.fw-card p em{color:var(--text);font-style:italic;}
+.card-P{--accent:var(--P);}
+.card-A{--accent:var(--A);}
+.card-S{--accent:var(--S);}
+.card-T{--accent:var(--T);}
+.card-D{--accent:var(--P);}
+.card-E{--accent:var(--S);}
+.card-Aa{--accent:var(--A);}
+.card-L{--accent:var(--T);}
+.fw-quote{font-family:var(--font-display);font-style:italic;font-size:clamp(1.2rem,2.6vw,1.6rem);font-weight:300;color:var(--cream);text-align:center;max-width:640px;margin:0 auto 3rem;line-height:1.5;}
+.dual{margin-top:0.85rem;padding-top:0.85rem;border-top:1px solid var(--border);}
+.dual-label{font-size:0.55rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.5rem;}
+.dual p{font-size:0.78rem;margin-bottom:0.5rem;}
+.dual p b{color:var(--accent);font-weight:600;}
 
-/* HERO */
-.hero {
-  padding: 140px 0 80px;
-  text-align: center;
-}
-.hero-eyebrow {
-  font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;
-  color:var(--teal);margin-bottom:2rem;
-  opacity:0;animation:fadeUp 0.8s ease forwards 0.2s;
-}
-.hero h1 {
-  font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:300;line-height:1.05;
-  margin-bottom:1.5rem;
-  opacity:0;animation:fadeUp 0.8s ease forwards 0.4s;
-}
-.hero h1 em { font-style:italic;color:var(--teal); }
-.hero-sub {
-  font-size:0.88rem;color:var(--text-muted);max-width:560px;margin:0 auto 3rem;line-height:1.9;
-  opacity:0;animation:fadeUp 0.8s ease forwards 0.6s;
-}
-.hero-root {
-  display:inline-block;border:1px solid rgba(201,168,76,0.3);
-  padding:1rem 2.5rem;
-  font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--gold);
-  background:var(--gold-dim);
-  opacity:0;animation:fadeUp 0.8s ease forwards 0.8s;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+/* ── GO DEEPER ── */
+.deeper{background:var(--navy-mid);}
+.deeper-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;}
+.deep-card{padding:1.75rem;border:1px solid var(--border);border-radius:4px;background:var(--navy);transition:border-color var(--transition),transform var(--transition);}
+.deep-card:hover{border-color:var(--border-mid);transform:translateY(-2px);}
+.deep-eyebrow{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+.deep-card h3{font-family:var(--font-display);font-size:1.5rem;font-weight:400;color:var(--cream);line-height:1.2;margin-bottom:0.75rem;}
+.deep-card p{font-size:0.82rem;color:var(--text-mid);line-height:1.8;margin-bottom:0.85rem;}
+.deep-insight{font-family:var(--font-display);font-style:italic;font-size:1rem;color:var(--text);line-height:1.5;}
+.deep-soon{display:inline-block;margin-top:1rem;font-size:0.55rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);border:1px solid var(--border);padding:0.35rem 0.7rem;border-radius:2px;}
 
-/* DIVIDER */
-.divider {
-  display:flex;align-items:center;gap:1.5rem;margin:5rem 0 3rem;
-}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border-bright);opacity:0.5;}
-.divider span{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);white-space:nowrap;}
+/* ── CTA ── */
+.cta{background:linear-gradient(135deg,var(--navy-mid) 0%,#0c1a35 100%);text-align:center;position:relative;overflow:hidden;}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,var(--teal-glow) 0%,transparent 65%);pointer-events:none;}
+.cta-inner{position:relative;max-width:620px;margin:0 auto;}
+.cta h2{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.4rem);font-weight:300;color:var(--cream);margin-bottom:1.25rem;line-height:1.15;}
+.cta h2 em{font-style:italic;color:var(--teal);}
+.cta p{color:var(--text-mid);font-size:0.95rem;line-height:1.8;margin-bottom:2.25rem;}
+.cta-actions{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;}
 
-/* SECTION LABEL */
-.sec-label {
-  font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;
-  color:var(--teal);margin-bottom:1rem;display:block;
-}
+/* ── FOOTER ── */
+footer{background:#060f1e;padding:3rem 0 2rem;border-top:1px solid var(--border);text-align:center;}
+.footer-name{font-family:var(--font-display);font-size:1.1rem;color:var(--cream);margin-bottom:0.4rem;}
+.footer-tag{font-size:0.7rem;color:var(--text-light);letter-spacing:0.1em;margin-bottom:1.5rem;}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+.footer-links a{font-size:0.7rem;color:var(--text-mid);letter-spacing:0.05em;transition:color var(--transition);}
+.footer-links a:hover{color:var(--teal);}
+.footer-copy{font-size:0.6rem;color:var(--text-light);line-height:1.7;}
 
-/* ROOT THESIS */
-.root-section { padding:4rem 0; }
-.root-grid { display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start; }
-.root-text h2 {
-  font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;
-  margin-bottom:1.5rem;line-height:1.2;
-}
-.root-text h2 em { font-style:italic;color:var(--teal); }
-.root-text p { font-size:0.84rem;color:var(--text-muted);line-height:1.95;margin-bottom:1rem; }
-.mercy-box {
-  border-left:2px solid var(--teal);padding:1.5rem 1.5rem 1.5rem 2rem;
-  background:var(--teal-glow);margin:2rem 0;
-  font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-primary);line-height:1.7;
-}
-.root-aside {
-  padding:2rem;border:1px solid var(--border-bright);background:rgba(255,255,255,0.02);
-}
-.root-aside .aside-label {
-  font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:1.5rem;display:block;
-  border-bottom:1px solid var(--border);padding-bottom:0.8rem;
-}
-.aside-item { margin-bottom:1.5rem; }
-.aside-item strong {
-  display:block;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;
-  color:var(--text-primary);margin-bottom:0.3rem;
-}
-.aside-item span { font-size:0.78rem;color:var(--text-muted);line-height:1.7; }
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:none;}
 
-/* WORTH TYPOLOGY */
-.worth-section { padding:4rem 0; }
-.worth-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:2rem; }
-.worth-card {
-  padding:2rem 1.8rem;border:1px solid;position:relative;
-  transition:transform 0.35s,box-shadow 0.35s;
-}
-.worth-card:hover{transform:translateY(-4px);}
-.worth-card.perf{border-color:rgba(200,90,60,0.3);background:linear-gradient(135deg,var(--rust-dim) 0%,transparent 60%);}
-.worth-card.perf:hover{box-shadow:0 8px 40px rgba(200,90,60,0.1);}
-.worth-card.borrow{border-color:rgba(201,168,76,0.3);background:linear-gradient(135deg,var(--gold-dim) 0%,transparent 60%);}
-.worth-card.borrow:hover{box-shadow:0 8px 40px rgba(201,168,76,0.1);}
-.worth-card.struct{border-color:rgba(0,200,180,0.3);background:linear-gradient(135deg,var(--teal-dim) 0%,transparent 60%);}
-.worth-card.struct:hover{box-shadow:0 8px 40px rgba(0,200,180,0.1);}
-.worth-tag{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;display:block;}
-.perf .worth-tag{color:rgba(200,90,60,0.8);}
-.borrow .worth-tag{color:rgba(201,168,76,0.8);}
-.struct .worth-tag{color:var(--teal);}
-.worth-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;margin-bottom:0.8rem;}
-.worth-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.9;}
-.worth-pullquote{
-  margin-top:3rem;padding:2rem;text-align:center;
-  border:1px solid rgba(0,200,180,0.2);background:var(--teal-glow);
-  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--text-primary);
-}
-
-/* SPECTRUM */
-.spectrum-section{padding:4rem 0;}
-.spectrum-header{text-align:center;margin-bottom:3rem;}
-.spectrum-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;margin-bottom:0.8rem;}
-.spectrum-header p{font-size:0.84rem;color:var(--text-muted);max-width:560px;margin:0 auto;}
-
-/* SPECTRUM BAR */
-.spec-bar-wrap{position:relative;margin:2rem auto 4rem;max-width:900px;}
-.spec-dest{text-align:center;font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;}
-.spec-bar{height:3px;background:linear-gradient(to right,rgba(200,90,60,0.7) 0%,rgba(0,200,180,1) 50%,rgba(74,138,106,0.7) 100%);position:relative;border-radius:2px;margin:1rem 0 2.5rem;}
-.spec-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 20px rgba(0,200,180,0.5);}
-.spec-ends{display:flex;justify-content:space-between;}
-.spec-end{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;}
-.spec-end.left{color:rgba(200,90,60,0.7);}
-.spec-end.mid{color:var(--teal);text-align:center;}
-.spec-end.right{color:rgba(74,138,106,0.7);text-align:right;}
-.spec-end small{display:block;opacity:0.6;margin-top:0.15rem;}
-
-/* POLES */
-.poles-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;}
-.pole{padding:2.5rem 2rem;border:1px solid;position:relative;transition:transform 0.35s,box-shadow 0.35s;}
-.pole:hover{transform:translateY(-4px);}
-.pole.self{border-color:rgba(200,90,60,0.3);background:linear-gradient(135deg,var(--rust-dim) 0%,transparent 60%);}
-.pole.self:hover{box-shadow:0 8px 40px rgba(200,90,60,0.12);}
-.pole.bound{border-color:rgba(0,200,180,0.3);background:linear-gradient(135deg,var(--teal-dim) 0%,transparent 60%);}
-.pole.bound:hover{box-shadow:0 8px 40px rgba(0,200,180,0.12);}
-.pole.emp{border-color:rgba(74,138,106,0.3);background:linear-gradient(135deg,var(--sage-dim) 0%,transparent 60%);}
-.pole.emp:hover{box-shadow:0 8px 40px rgba(74,138,106,0.1);}
-.pole-tag{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.2rem;display:block;}
-.self .pole-tag{color:rgba(200,90,60,0.8);}
-.bound .pole-tag{color:var(--teal);}
-.emp .pole-tag{color:rgba(74,138,106,0.9);}
-.pole h3{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;margin-bottom:0.6rem;}
-.pole-tagline{font-size:0.8rem;color:var(--text-muted);margin-bottom:1.5rem;font-style:italic;}
-.pole-section{border-top:1px solid var(--border);padding-top:1.2rem;margin-top:1.2rem;}
-.pole-section-label{font-family:'Space Mono',monospace;font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.6rem;display:block;}
-.pole p{font-size:0.79rem;color:var(--text-muted);line-height:1.85;margin-bottom:0.8rem;}
-.pole-extreme{display:inline-block;margin-top:1rem;font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;padding:0.3rem 0.8rem;border:1px solid;opacity:0.6;}
-.self .pole-extreme{border-color:rgba(200,90,60,0.5);color:rgba(200,90,60,0.9);}
-.bound .pole-extreme{border-color:var(--teal);color:var(--teal);}
-.emp .pole-extreme{border-color:rgba(74,138,106,0.5);color:rgba(74,138,106,0.9);}
-.mercy-ask{margin-top:1.5rem;padding:1rem 1rem 1rem 1.2rem;border-left:2px solid;font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-style:italic;line-height:1.7;}
-.self .mercy-ask{border-color:rgba(200,90,60,0.5);color:rgba(200,90,60,0.9);background:rgba(200,90,60,0.05);}
-.bound .mercy-ask{border-color:var(--teal);color:var(--teal);background:var(--teal-glow);}
-.emp .mercy-ask{border-color:rgba(74,138,106,0.5);color:rgba(74,138,106,0.9);background:rgba(74,138,106,0.05);}
-
-/* SHARED ROOT */
-.shared-root{padding:3rem 2rem;margin:3rem 0;border:1px solid var(--border-bright);background:rgba(255,255,255,0.015);text-align:center;}
-.shared-root h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;margin-bottom:1rem;}
-.shared-root .wound{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-style:italic;color:var(--gold);margin:1rem 0;}
-.shared-root p{font-size:0.82rem;color:var(--text-muted);max-width:600px;margin:0 auto 1rem;line-height:1.9;}
-.plain-true{
-  margin:2rem auto 0;max-width:650px;padding:2rem;
-  border:1px solid rgba(0,200,180,0.2);background:var(--teal-glow);
-  font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;line-height:1.7;
-}
-
-/* SHAME TYPOLOGY */
-.shame-section{padding:4rem 0;}
-.shame-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-top:2rem;}
-.shame-card{padding:2rem 1.8rem;border-top:2px solid;border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
-.shame-card.ejected{border-top-color:rgba(200,90,60,0.7);}
-.shame-card.absorbed{border-top-color:rgba(201,168,76,0.6);}
-.shame-card.metabolized{border-top-color:var(--teal);}
-.shame-card .shame-type{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1rem;display:block;}
-.ejected .shame-type{color:rgba(200,90,60,0.8);}
-.absorbed .shame-type{color:rgba(201,168,76,0.8);}
-.metabolized .shame-type{color:var(--teal);}
-.shame-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:0.8rem;}
-.shame-card p{font-size:0.79rem;color:var(--text-muted);line-height:1.85;}
-.shame-lesson{
-  margin-top:3rem;padding:2rem;text-align:center;
-  border:1px solid rgba(201,168,76,0.25);background:var(--gold-dim);
-  font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--gold);
-}
-
-/* PAST FRAMEWORK */
-.past-section{padding:4rem 0;}
-.past-header{margin-bottom:3rem;}
-.past-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;margin-bottom:0.5rem;}
-.past-header .past-tagline{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--gold);}
-.past-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
-.past-card{padding:2.5rem 2rem;border:1px solid rgba(201,168,76,0.2);background:linear-gradient(135deg,var(--gold-dim) 0%,transparent 50%);transition:transform 0.35s,box-shadow 0.35s;}
-.past-card:hover{transform:translateY(-4px);box-shadow:0 8px 40px rgba(201,168,76,0.1);}
-.past-letter{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:0.3rem;opacity:0.8;}
-.past-word{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;display:block;}
-.past-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:0.8rem;}
-.past-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.85;}
-
-/* DEAL FRAMEWORK */
-.deal-section{padding:4rem 0;}
-.deal-header{margin-bottom:3rem;}
-.deal-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;margin-bottom:0.5rem;}
-.deal-header .deal-tagline{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--teal);}
-.deal-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
-.deal-card{padding:2.5rem 2rem;border:1px solid rgba(0,200,180,0.2);background:linear-gradient(135deg,var(--teal-dim) 0%,transparent 50%);transition:transform 0.35s,box-shadow 0.35s;}
-.deal-card:hover{transform:translateY(-4px);box-shadow:0 8px 40px rgba(0,200,180,0.1);}
-.deal-letter{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--teal);line-height:1;margin-bottom:0.3rem;opacity:0.8;}
-.deal-word{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:0.8rem;display:block;}
-.deal-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:0.8rem;}
-.deal-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.85;}
-.deal-dual{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
-.deal-dual-label{font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem;display:block;}
-.deal-dual p{font-size:0.75rem;color:var(--text-muted);line-height:1.8;margin-bottom:0.5rem;}
-.deal-dual p span{color:rgba(200,90,60,0.7);}
-.deal-dual p em{color:rgba(74,138,106,0.8);font-style:normal;}
-
-/* PENDULUM */
-.pendulum-section{padding:4rem 0;}
-.pendulum-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
-.pendulum-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;margin-bottom:1.5rem;line-height:1.2;}
-.pendulum-text h2 em{font-style:italic;color:var(--teal);}
-.pendulum-text p{font-size:0.82rem;color:var(--text-muted);line-height:1.9;margin-bottom:1rem;}
-.pendulum-pull{border-left:2px solid var(--teal);padding:1.2rem 1.2rem 1.2rem 1.8rem;background:var(--teal-glow);font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;line-height:1.7;margin:1.5rem 0;color:var(--text-primary);}
-
-/* PENDULUM SVG */
-.pendulum-vis{display:flex;align-items:center;justify-content:center;min-height:300px;}
-.pendulum-svg-wrap{position:relative;width:100%;max-width:360px;}
-.pendulum-arc{
-  width:100%;height:220px;
-  border-bottom:2px solid rgba(0,200,180,0.4);
-  border-radius:50%;
-  position:relative;
-  overflow:visible;
-}
-.pend-labels{display:flex;justify-content:space-between;margin-top:1rem;}
-.pend-label{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;}
-.pend-label.left{color:rgba(200,90,60,0.7);}
-.pend-label.center{color:var(--teal);text-align:center;}
-.pend-label.right{color:rgba(74,138,106,0.7);text-align:right;}
-
-/* CYLINDER */
-.cylinder-section{padding:4rem 0;}
-.cylinder-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
-.cylinder-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;margin-bottom:1.5rem;line-height:1.2;}
-.cylinder-text h2 em{font-style:italic;color:var(--teal);}
-.cylinder-text p{font-size:0.82rem;color:var(--text-muted);line-height:1.9;margin-bottom:1rem;}
-.cylinder-pull{border-left:2px solid var(--gold);padding:1.2rem 1.2rem 1.2rem 1.8rem;background:var(--gold-dim);font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;line-height:1.7;margin:1.5rem 0;color:var(--gold);}
-.accountability-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;}
-.acc-card{padding:1.5rem;border:1px solid var(--border);background:rgba(255,255,255,0.015);}
-.acc-card .acc-tag{font-family:'Space Mono',monospace;font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.8rem;display:block;}
-.acc-card.self-acc .acc-tag{color:rgba(200,90,60,0.7);}
-.acc-card.emp-acc .acc-tag{color:rgba(74,138,106,0.8);}
-.acc-card h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;margin-bottom:0.6rem;}
-.acc-card p{font-size:0.77rem;color:var(--text-muted);line-height:1.8;}
-.acc-resolution{
-  grid-column:1/-1;padding:1.5rem;text-align:center;
-  border:1px solid rgba(0,200,180,0.2);background:var(--teal-glow);
-  font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--teal);line-height:1.7;
-}
-
-/* CYLINDER VISUAL */
-.cylinder-vis{display:flex;align-items:center;justify-content:center;min-height:280px;}
-.cyl-svg{width:100%;max-width:340px;}
-
-/* CAPACITY */
-.capacity-section{padding:4rem 0;}
-.capacity-def{
-  padding:3rem;text-align:center;
-  border:1px solid rgba(0,200,180,0.25);background:var(--teal-glow);
-  margin-bottom:3rem;
-}
-.capacity-def .def-label{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;display:block;}
-.capacity-def .def-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,2.5vw,2rem);font-style:italic;line-height:1.4;margin-bottom:0.8rem;}
-.capacity-def .def-attr{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--text-dim);}
-.capacity-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:3rem;}
-.cap-card{padding:1.8rem;border:1px solid var(--border);background:rgba(255,255,255,0.015);}
-.cap-card .cap-label{font-family:'Space Mono',monospace;font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.8rem;display:block;}
-.cap-card h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;margin-bottom:0.6rem;}
-.cap-card p{font-size:0.77rem;color:var(--text-muted);line-height:1.8;}
-.arc-row{display:grid;grid-template-columns:repeat(7,1fr);gap:0.5rem;margin:2rem 0;}
-.arc-item{text-align:center;padding:1rem 0.5rem;border:1px solid var(--border);}
-.arc-item .arc-stage{font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem;display:block;}
-.arc-item .arc-name{font-family:'Cormorant Garamond',serif;font-size:0.85rem;font-style:italic;color:var(--text-muted);}
-
-/* PUNNETT */
-.punnett-section{padding:4rem 0;}
-.punnett-header{margin-bottom:2rem;}
-.punnett-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;margin-bottom:0.8rem;}
-.punnett-header p{font-size:0.82rem;color:var(--text-muted);max-width:560px;line-height:1.9;}
-.punnett-grid{
-  display:grid;
-  grid-template-columns:120px 1fr 1fr;
-  grid-template-rows:50px 1fr 1fr;
-  gap:2px;
-  margin:2rem 0;
-  background:var(--border-bright);
-}
-.punnett-cell{background:var(--navy-mid);padding:1.5rem;}
-.punnett-header-cell{
-  background:var(--navy-light);display:flex;align-items:center;justify-content:center;
-  font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;
-}
-.punnett-header-cell.teal{color:var(--teal);}
-.punnett-header-cell.gold{color:var(--gold);}
-.punnett-row-label{
-  background:var(--navy-light);display:flex;align-items:center;justify-content:center;
-  font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;
-  writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);
-}
-.punnett-row-label.will-yes{color:var(--teal);}
-.punnett-row-label.will-no{color:rgba(200,90,60,0.7);}
-.punnett-blank{background:var(--navy-light);}
-.quad{padding:1.8rem;}
-.quad h4{font-family:'Montserrat',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem;}
-.quad.growth h4{color:var(--teal);}
-.quad.longing h4{color:var(--gold);}
-.quad.stagnation h4{color:rgba(200,90,60,0.8);}
-.quad.absence h4{color:var(--text-dim);}
-.quad p{font-size:0.77rem;color:var(--text-muted);line-height:1.8;}
-.quad .quad-action{margin-top:0.8rem;font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;opacity:0.7;}
-.quad.growth .quad-action{color:var(--teal);}
-.quad.longing .quad-action{color:var(--gold);}
-.quad.stagnation .quad-action{color:rgba(200,90,60,0.7);}
-.quad.absence .quad-action{color:var(--text-dim);}
-.punnett-note{margin-top:2rem;padding:1.5rem;border:1px solid var(--border);font-size:0.8rem;color:var(--text-muted);line-height:1.9;}
-.punnett-note strong{color:var(--gold);font-weight:500;}
-
-/* ARCHITECTURE SUMMARY */
-.summary-section{padding:4rem 0;}
-.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
-.summary-col h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border);}
-.summary-col.past h3{color:var(--gold);}
-.summary-col.deal h3{color:var(--teal);}
-.summary-list{list-style:none;display:flex;flex-direction:column;gap:0.8rem;}
-.summary-list li{font-size:0.8rem;color:var(--text-muted);padding-left:1.5rem;position:relative;line-height:1.7;}
-.summary-list li::before{content:'';position:absolute;left:0;top:0.6em;width:6px;height:1px;}
-.past .summary-list li::before{background:var(--gold);}
-.deal .summary-list li::before{background:var(--teal);}
-.destination{
-  margin-top:4rem;padding:3rem;text-align:center;
-  border:1px solid rgba(0,200,180,0.25);background:var(--teal-glow);
-}
-.destination .dest-label{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1.5rem;display:block;}
-.destination h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;margin-bottom:1rem;line-height:1.2;}
-.destination h2 em{font-style:italic;color:var(--teal);}
-.destination p{font-size:0.82rem;color:var(--text-muted);max-width:520px;margin:0 auto;line-height:1.9;}
-
-/* CTA */
-.cta-section{padding:6rem 0;text-align:center;border-top:1px solid var(--border);}
-.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;margin-bottom:0.8rem;}
-.cta-section p{font-size:0.85rem;color:var(--text-muted);margin-bottom:2.5rem;max-width:460px;margin-left:auto;margin-right:auto;}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-.btn-p{display:inline-block;padding:0.9rem 2.5rem;background:var(--teal);color:var(--navy);font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;}
-.btn-p:hover{background:#00e5cf;transform:translateY(-2px);}
-.btn-g{display:inline-block;padding:0.9rem 2.5rem;border:1px solid var(--border-bright);color:var(--text-muted);font-family:'Montserrat',sans-serif;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;}
-.btn-g:hover{border-color:var(--teal);color:var(--teal);}
-
-/* FOOTER */
-footer{padding:2.5rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:0.56rem;color:var(--text-dim);letter-spacing:0.08em;}
-footer a{color:var(--teal);text-decoration:none;}
-.framework-nav{padding:1.5rem 0;border-top:1px solid var(--border);display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
-.framework-nav a{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.3s;}
-.framework-nav a:hover,.framework-nav a.active{color:var(--teal);}
-
+/* ── MOBILE ── */
 @media(max-width:768px){
-  .root-grid,.spectrum-section .poles-grid,.worth-grid,.shame-grid,.past-grid,.deal-grid,.pendulum-grid,.cylinder-grid,.capacity-grid,.summary-grid,.accountability-grid,.punnett-grid{grid-template-columns:1fr;}
-  .arc-row{grid-template-columns:repeat(4,1fr);}
-  .punnett-grid{grid-template-columns:80px 1fr 1fr;}
-  .nav-links{display:none;}
-  footer{flex-direction:column;gap:0.8rem;text-align:center;}
+  .fw-grid{grid-template-columns:1fr;}
+  .deeper-grid{grid-template-columns:1fr;}
+  .section{padding:4rem 0;}
+  .hero{padding:7.5rem 0 3.5rem;}
+  .nav-cta{display:none;}
 }
-
-
-/* MOBILE READABILITY PATCH — added for stronger phone readability */
-body {
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+@media(max-width:600px){
+  .container{width:88%;}
+  .fw-card{padding:1.6rem 1.4rem;}
+  .deep-card{padding:1.5rem;}
+  .hero h1{font-size:2.5rem;}
+  .nav-logo-name{font-size:0.95rem;}
 }
-
-p,
-.body-text,
-.hero-sub,
-.root-text p,
-.root-aside span,
-.worth-card p,
-.pole p,
-.shame-card p,
-.past-card p,
-.deal-card p,
-.pendulum-text p,
-.cylinder-text p,
-.acc-card p,
-.cap-card p,
-.punnett-header p,
-.quad p,
-.summary-list li,
-.destination p,
-.cta-section p {
-  font-weight: 400;
+@media(max-width:380px){
+  .hero h1{font-size:2.1rem;}
+  .fw-letter{font-size:2.4rem;}
+  .btn{padding:0.9rem 1.5rem;font-size:0.58rem;}
 }
-
-@media(max-width:768px){
-  body {
-    font-weight: 400;
-    line-height: 1.75;
-  }
-
-  .wrap {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-
-  nav {
-    padding: 0.85rem 1.25rem;
-  }
-
-  p,
-  .body-text,
-  .hero-sub,
-  .root-text p,
-  .root-aside span,
-  .worth-card p,
-  .pole p,
-  .shame-card p,
-  .past-card p,
-  .deal-card p,
-  .pendulum-text p,
-  .cylinder-text p,
-  .acc-card p,
-  .cap-card p,
-  .punnett-header p,
-  .quad p,
-  .summary-list li,
-  .destination p,
-  .cta-section p {
-    font-size: 0.95rem;
-    line-height: 1.85;
-  }
-
-  .hero {
-    padding-top: 118px;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.55rem, 12vw, 3.5rem);
-  }
-
-  .sec-label,
-  .divider span,
-  .nav-switch,
-  .nav-logo,
-  .worth-tag,
-  .pole-tag,
-  .past-word,
-  .deal-word,
-  .card-label,
-  .btn-p,
-  .btn-g,
-  .btn-outline,
-  .btn-primary {
-    font-weight: 600;
-  }
-
-  .worth-card,
-  .pole,
-  .past-card,
-  .deal-card,
-  .shame-card,
-  .cap-card,
-  .acc-card,
-  .quad {
-    padding-left: 1.35rem;
-    padding-right: 1.35rem;
-  }
-
-  .punnett-grid {
-    overflow-x: auto;
-    display: grid;
-    min-width: 100%;
-  }
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  html{scroll-behavior:auto;}
 }
-
 </style>
 </head>
 <body>
-<div class="ambient a1"></div>
-<div class="ambient a2"></div>
 
-<nav>
-  <a class="nav-logo" href="https://icu-1111.com">ICU·1111</a>
-  <ul class="nav-links">
-    <li><a href="#past">PAST</a></li>
-    <li><a href="#deal">DEAL</a></li>
-    <li><a href="#capacity">Capacity</a></li>
-    <li><a href="#cylinder">Cylinder</a></li>
-    <li><a href="https://calendly.com/icu1111/30-min-discovery-call">Book</a></li>
-  </ul>
-  <a class="nav-switch" href="personal.html">Coaching Version →</a>
+<!-- NAV -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="https://anjuredheendran.com" class="nav-logo">
+      <span class="nav-logo-name">Anju Redheendran</span>
+      <span class="nav-logo-title">RN · BSN · MBA · CLC</span>
+    </a>
+    <a href="https://calendly.com/icu1111/30-min-discovery-call" target="_blank" rel="noopener" class="nav-cta">Let's Talk</a>
+  </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="wrap">
-    <div class="hero-eyebrow">ICU-1111 · Intellectual Property Architecture · v1.2 · June 2026</div>
-    <h1>The Complete<br><em>Framework Library</em></h1>
-    <p class="hero-sub">Every clinical model, diagnostic framework, and philosophical principle underlying the work of ICU-1111. The PAST Framework identifies the patterns. The DEAL Framework maps the path. The Capacity Framework explains the mechanism. The Cylinder reveals the geometry of truth.</p>
-    <div class="hero-root">"Incomplete identity is the source of every pattern."</div>
-  </div>
-</section>
-
-<div class="wrap">
-
-<!-- ROOT THESIS -->
-<div class="divider"><span>Section One · Root Thesis &amp; Mercy Lens</span></div>
-<section class="root-section">
-  <div class="root-grid">
-    <div class="root-text">
-      <span class="sec-label">The Foundation</span>
-      <h2>The Root<br><em>Thesis</em></h2>
-      <p>Every pattern that shows up in relationships, health, achievement, and self-worth is not random. Not a personality flaw. Not a character defect. It is the predictable output of an identity that was never fully formed — or that was formed under conditions that required distortion in order to survive.</p>
-      <p>The work of ICU-1111 is not symptom management. It is identity completion. The goal is not a better-functioning broken system. The goal is a fully formed self — one that does not need to prove its worth, borrow its worth, or perform its worth.</p>
-      <div class="mercy-box">
-        Both people are wounded. Judgment keeps people stuck. Mercy moves them forward.
-      </div>
-      <p>The Mercy Lens is not a philosophical stance — it is a clinical necessity. Neither extreme can receive the truth as a confrontation. Mercy is the only delivery mechanism the truth can travel through when someone's entire identity structure is built to keep it out.</p>
+<header class="hero">
+  <div class="container hero-inner">
+    <div class="eyebrow">The PAST Framework™ · ICU-1111</div>
+    <h1>You're not living in the past. Your past is <em>living in you.</em></h1>
+    <p class="hero-sub">The same patterns keep showing up — in your relationships, your health, your work, the way you see yourself. That's not a character flaw. It's a predictable output of an identity that was never fully formed. This is the framework that names it.</p>
+    <div class="hero-actions">
+      <a href="#past" class="btn btn-primary">See the four patterns</a>
+      <a href="https://calendly.com/icu1111/30-min-discovery-call" target="_blank" rel="noopener" class="btn btn-ghost">Book a discovery call</a>
     </div>
-    <div class="root-aside">
-      <span class="aside-label">The Mercy Ask — Precise Version</span>
-      <div class="aside-item">
-        <strong>To the self-authorship extreme:</strong>
-        <span>What if you weren't right — and you were still okay? Not an attack. Just: what if this one thing wasn't accurate and you survived knowing that?</span>
-      </div>
-      <div class="aside-item">
-        <strong>To the empathy extreme:</strong>
-        <span>What if you weren't as wrong or as bad as you think you are — and you didn't have to prove or justify your existence? What if the charges you've been pleading guilty to were never actually true?</span>
-      </div>
-      <div class="aside-item">
-        <strong>The shared lesson:</strong>
-        <span>You can be wrong and still be worthwhile. Not because you declared it. Not because you stayed silent and let others decide. Because it is simply true.</span>
-      </div>
+    <p class="hero-thesis">"Incomplete identity is the source of <span>every pattern.</span>"</p>
+  </div>
+</header>
+
+<!-- THESIS -->
+<section class="section thesis reveal">
+  <div class="container">
+    <div class="section-label">The Foundation</div>
+    <h2 class="section-h2">The Root <em>Thesis</em></h2>
+    <div class="divider"></div>
+    <div class="thesis-body" style="margin-top:3rem;">
+      <p>Every pattern that shows up in relationships, health, achievement, and self-worth is not random. Not a personality flaw. Not a character defect.</p>
+      <p class="thesis-pull">It is the predictable output of an identity that was never fully formed.</p>
+      <p>Or one formed under conditions that required distortion in order to survive. The work here is not symptom management. It is <strong>identity completion</strong> — a fully formed self that doesn't need to prove its worth, borrow its worth, or perform its worth.</p>
     </div>
   </div>
 </section>
 
-<!-- WORTH TYPOLOGY -->
-<div class="divider"><span>Section Two · The Worth Typology</span></div>
-<section class="worth-section">
-  <span class="sec-label">Three Ways of Relating to Your Own Worth</span>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;margin-bottom:0.5rem;">Worth that requires proof<br>is worth that can be disproven.</h2>
-  <div class="worth-grid">
-    <div class="worth-card perf">
-      <span class="worth-tag">Performance-Based</span>
-      <h3>Prove It</h3>
-      <p>I must generate proof. The workaholic generates it through output. The self-authorship extreme generates it through narrative control. The Audition — performing for love instead of receiving it — is performance-based worth in relationship form. It lives in the future. You are always rehearsing. Never present. The proof is never enough.</p>
-    </div>
-    <div class="worth-card borrow">
-      <span class="worth-tag">Borrowed</span>
-      <h3>Collect It</h3>
-      <p>I must collect proof from others. Approval, belonging, acceptance — the currency. The people-pleaser collects through agreement. The empathy extreme collects through belonging. The Pairing is two people trying to extract worth from the same depleted source. It leaves every time the person does.</p>
-    </div>
-    <div class="worth-card struct">
-      <span class="worth-tag">Structural</span>
-      <h3>Just Be It</h3>
-      <p>I do not generate it. I do not collect it. I simply am it. Present. Not performing for the future. Not managing what happened in the past. Just here. Structural worth only exists in one place: the present moment. This is the destination of the entire framework.</p>
-    </div>
-  </div>
-  <div class="worth-pullquote">
-    "Just being. Just living. Just present.<br>Not because you proved it. Not because someone confirmed it.<br>Because you let reality in — and you are still here."
-  </div>
-</section>
-
-<!-- SPECTRUM -->
-<div class="divider"><span>Section Three · The Identity Spectrum</span></div>
-<section class="spectrum-section">
-  <div class="spectrum-header">
-    <h2>Self-Authorship ↔ Empathy Spectrum</h2>
-    <p>A fully formed identity does not choose between knowing what you want and feeling what others need. It integrates both — through a boundary that discerns rather than defends.</p>
-  </div>
-
-  <div class="spec-bar-wrap">
-    <div class="spec-dest">Destination: a fully formed identity</div>
-    <div class="spec-bar"><div class="spec-dot"></div></div>
-    <div class="spec-ends">
-      <div class="spec-end left">◀ Narcissistic extreme<small>alone → entitlement</small></div>
-      <div class="spec-end mid">Integrated<small>discerning &amp; open</small></div>
-      <div class="spec-end right">Borderline extreme ▶<small>alone → self-erasure</small></div>
-    </div>
-  </div>
-
-  <div class="poles-grid">
-    <!-- SELF-AUTHORSHIP -->
-    <div class="pole self">
-      <span class="pole-tag">Logic Pole</span>
-      <h3>Self-Authorship</h3>
-      <p class="pole-tagline">Know what you want — author yourself.</p>
-      <p>The capacity to generate identity from the inside. To know what you feel, what you want, what you value — not because someone told you, not because it keeps the peace, but because you know yourself.</p>
-
-      <div class="pole-section">
-        <span class="pole-section-label">When unchecked — The Sealed Narrative</span>
-        <p>Not just entitlement — a <em style="color:rgba(200,90,60,0.9)">sealed narrative.</em> They are the author of their story even when evidence proves otherwise. They are not just the center of the universe — they are always right. Being wrong, in their mind, is being worthless. Being emotional is being weak — which is being worthless. So the walls go up. Not because they are strong. Because they cannot afford to find out they are not.</p>
-        <p>They will destroy relationships, gaslight people they love, and rewrite reality itself — all to avoid feeling worthless for thirty seconds.</p>
+<!-- PAST -->
+<section class="section" id="past">
+  <div class="container reveal">
+    <div class="section-label">The Diagnostic</div>
+    <h2 class="section-h2">The PAST <em>Framework™</em></h2>
+    <p class="section-intro">A diagnostic system — not a judgment. It identifies the four patterns that emerge from incomplete identity. Each one is a survival strategy that outlived its usefulness — the self's attempt to manage one root wound: <em>I am worthless.</em></p>
+    <div class="fw-grid">
+      <div class="fw-card card-P reveal">
+        <div class="fw-letter">P</div>
+        <div class="fw-name">The Pairing</div>
+        <div class="fw-tag">Wounds Recognize Wounds</div>
+        <p>Not chemistry or compatibility — complementary wound management. One extreme assigns blame outward. The other receives it inward. Neither is choosing consciously. <em>Both are choosing by wound.</em></p>
+        <p>One needs someone to hold the blame. One needs somewhere to put it. The relationship functions as a shared reality-management system — until the Squeeze.</p>
       </div>
-
-      <div class="pole-section">
-        <span class="pole-section-label">The Permitted Emotional Range</span>
-        <p>Power emotions only: confidence, anger, pride, certainty. Soft emotions — sadness, fear, grief, vulnerability — are not permitted. They get converted: sadness becomes anger, fear becomes contempt, grief becomes blame. This is restriction, not regulation.</p>
-        <p>Because they assign moral weight to their own emotional range, they apply the same verdict to others. When the empathy extreme expresses sadness or hurt, they read it as moral deficiency. Not inconvenient. Wrong.</p>
+      <div class="fw-card card-A reveal">
+        <div class="fw-letter">A</div>
+        <div class="fw-name">The Audition</div>
+        <div class="fw-tag">Performing for Love</div>
+        <p>When love was conditional in childhood, we learn to audition. Not to show up — to perform. To give from fear rather than fullness.</p>
+        <p>Every act of giving is also an act of earning. Presence is never available, because <em>you are always rehearsing.</em> And no performance secures worth permanently.</p>
       </div>
-
-      <div class="pole-section">
-        <span class="pole-section-label">The Shame Mechanism</span>
-        <p>Shame cannot be processed — it converts immediately to blame. The apology, if it comes, is structured to restore their image — not repair the person they hurt.</p>
+      <div class="fw-card card-S reveal">
+        <div class="fw-letter">S</div>
+        <div class="fw-name">The Squeeze</div>
+        <div class="fw-tag">Pressure Reveals Truth</div>
+        <p>Under pressure, we don't rise to our intentions — we fall to our patterns. The Squeeze is the moment the defense system fails and reality breaks through. Crisis, conflict, illness, loss, rupture.</p>
+        <p><em>The Squeeze is not a failure. It is an initiation</em> — the moment the framework becomes available, because the distortion finally cracked enough to let something true in.</p>
       </div>
-
-      <div class="mercy-ask">
-        "What if you weren't right — and you were still okay?"
-      </div>
-      <div class="pole-extreme">alone → entitlement · shame → blame</div>
-    </div>
-
-    <!-- BOUNDARIES -->
-    <div class="pole bound">
-      <span class="pole-tag">The Integrating Function</span>
-      <h3>Boundaries</h3>
-      <p class="pole-tagline">A membrane, not a wall — discerning and open.</p>
-      <p>Not the rigid refusal of entry, but the intelligent, alive, selective permeability that distinguishes self from not-self. The cell membrane is the clinical analogy: selectively permeable, responsive, maintaining integrity without isolation.</p>
-
-      <div class="pole-section">
-        <span class="pole-section-label">Shame Metabolized</span>
-        <p>The integrated person can feel shame, hold it, evaluate it, and either own it or set it down — without it destroying them or being weaponized outward. That is what a functioning boundary does with shame.</p>
-        <p style="font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-style:italic;color:var(--teal);">Shame metabolized → accountability.<br>Shame ejected → blame.<br>Shame absorbed → identity.</p>
-      </div>
-
-      <div class="pole-section">
-        <span class="pole-section-label">The Plain True Thing</span>
-        <p>You are not the greatest. You are not the worst. You are a person — among people. Neither the most important nor the least. Neither always right nor always wrong. Just a person who takes up the right amount of space and knows it.</p>
-        <p>Both distortions are grandiose — just in opposite directions. One is the sun. One is the black hole. Both have the same gravitational pull on everyone around them.</p>
-      </div>
-
-      <div class="mercy-ask">
-        "The boundary is what makes truth survivable."
-      </div>
-      <div class="pole-extreme">the integrating function</div>
-    </div>
-
-    <!-- EMPATHY -->
-    <div class="pole emp">
-      <span class="pole-tag">Emotion Pole</span>
-      <h3>Empathy</h3>
-      <p class="pole-tagline">Feel deeply without disappearing.</p>
-      <p>The capacity to move toward another's experience without losing the thread back to your own. Resonance without absorption. Presence without dissolution.</p>
-
-      <div class="pole-section">
-        <span class="pole-section-label">When unchecked — The Whatever You Want Loop</span>
-        <p>No authored preference exists when others are present. "Whatever you want" is not generosity — it is identity dissolution. Resentment accumulates because unspoken, unformed preferences were not divined by others. When asked their opinion, they genuinely do not know. They need to be told what to want.</p>
-        <p>Because they have echoed others so long, no one knows what they actually prefer. Everyone assumed they had no preferences — because they never surfaced them. Invisible to themselves first. Then invisible to everyone else.</p>
-      </div>
-
-      <div class="pole-section">
-        <span class="pole-section-label">Additional Clinical Markers</span>
-        <p><strong style="font-weight:500;color:var(--text-primary);">Chronic apology for existence:</strong> Not for something done, but for being. Sorry to bother you. Pre-emptive shrinking before anyone signals inconvenience.</p>
-        <p><strong style="font-weight:500;color:var(--text-primary);">Cannot receive a compliment cleanly:</strong> Thank you feels like a lie. The compliment triggers an explanation — a case for why the good thing might be warranted. The compliment is deflected because accepting it would require believing they deserve it.</p>
-        <p><strong style="font-weight:500;color:var(--text-primary);">Emotional exile:</strong> Taught their feelings were wrong, they buried the access point. Cannot answer "how do you feel?" — not from absence of feeling but from exile from it.</p>
-      </div>
-
-      <div class="mercy-ask">
-        "What if you weren't as wrong or as bad as you think — and you didn't have to prove or justify your existence?"
-      </div>
-      <div class="pole-extreme">alone → self-erasure · invisible to self → invisible to others</div>
-    </div>
-  </div>
-
-  <!-- SHARED ROOT -->
-  <div class="shared-root" style="margin-top:3rem;">
-    <h3>The Shared Root</h3>
-    <div class="wound">I am worthless.</div>
-    <p>Same wound. Opposite defenses. One builds walls so the fear can never be confirmed. The other disappears so the fear can never be risked.</p>
-    <div class="plain-true">
-      "You are not the greatest. You are not the worst. You are a person — among people. Neither the most important nor the least. Neither always right nor always wrong. Neither owed everything nor owed nothing. Just a person who takes up the right amount of space and knows it."
-    </div>
-  </div>
-</section>
-
-<!-- SHAME TYPOLOGY -->
-<div class="divider"><span>Section Four · The Shame Typology</span></div>
-<section class="shame-section">
-  <span class="sec-label">Three Relationships With Shame</span>
-  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;margin-bottom:0.5rem;">Shame metabolized is accountability.<br>Shame ejected is blame.<br>Shame absorbed is identity.</h2>
-  <div class="shame-grid">
-    <div class="shame-card ejected">
-      <span class="shame-type">Self-Authorship Extreme</span>
-      <h3>Shame Ejected</h3>
-      <p>Arrives and is immediately expelled. Cannot be held, processed, or integrated. Converts to blame, defensiveness, counter-narrative. The membrane is one-way — only self-affirming information enters. What looks like confidence is often a shame-processing failure.</p>
-    </div>
-    <div class="shame-card metabolized" style="border-top-color:var(--teal);">
-      <span class="shame-type" style="color:var(--teal);">Integration</span>
-      <h3>Shame Metabolized</h3>
-      <p>Can feel shame, hold it, evaluate it, and either own it or set it down — without it destroying them or being weaponized outward. "I got that wrong. That caused harm. I am responsible. And I am still here." That is what a functioning boundary does with shame.</p>
-    </div>
-    <div class="shame-card absorbed">
-      <span class="shame-type">Empathy Extreme</span>
-      <h3>Shame Absorbed</h3>
-      <p>Does not get ejected — absorbed wholesale and permanently. No authored self to evaluate it against — it floods in and settles. They do not feel shame when wrong — they are shame. Every criticism simply confirms what was already believed.</p>
-    </div>
-  </div>
-  <div class="shame-lesson">
-    "You can be wrong and still be worthwhile. Not because you declared it. Not because you stayed silent and let others decide. Because it is simply true — and you finally have a self sturdy enough to hold it."
-  </div>
-</section>
-
-<!-- PAST FRAMEWORK -->
-<div class="divider" id="past"><span>Section Five · The PAST Framework™</span></div>
-<section class="past-section">
-  <div class="past-header">
-    <span class="sec-label">The Diagnostic</span>
-    <h2>The PAST Framework™</h2>
-    <div class="past-tagline">"You are not living in the past. Your past is living in you."</div>
-  </div>
-  <p style="font-size:0.84rem;color:var(--text-muted);max-width:680px;line-height:1.9;margin-bottom:3rem;">The PAST Framework is a diagnostic system — not a judgment. It identifies the four patterns that emerge from incomplete identity. These patterns are survival strategies that outlived their usefulness. Each one is the self's attempt to manage the root wound — <em style="color:var(--gold)">I am worthless</em> — in the absence of structural worth.</p>
-  <div class="past-grid">
-    <div class="past-card">
-      <div class="past-letter">P</div>
-      <span class="past-word">The Pairing</span>
-      <h3>Wounds Recognize Wounds</h3>
-      <p>Not chemistry or compatibility — complementary wound management. The self-authorship extreme assigns blame outward. The empathy extreme receives blame inward. Neither is choosing consciously. Both are choosing by wound. One needs someone to hold the blame. One needs somewhere to put it. The relationship functions as a shared reality-management system. It holds until the Squeeze.</p>
-    </div>
-    <div class="past-card">
-      <div class="past-letter">A</div>
-      <span class="past-word">The Audition</span>
-      <h3>Performing for Love</h3>
-      <p>When love was conditional in childhood, we learn to audition. Not to show up — to perform. To give from fear rather than fullness. The Audition is performance-based worth in relationship form. Every act of giving is also an act of earning. Presence is never available because you are always rehearsing. There is no performance that secures worth permanently.</p>
-    </div>
-    <div class="past-card">
-      <div class="past-letter">S</div>
-      <span class="past-word">The Squeeze</span>
-      <h3>Pressure Reveals Truth</h3>
-      <p>Under pressure, we do not rise to our intentions — we fall to our patterns. The Squeeze is the moment when the defense system fails and reality breaks through. Crisis, conflict, illness, loss, rupture. The distortion cracks. The Squeeze is not a failure. It is an initiation. It is the moment the framework becomes available — because the distortion finally cracked enough to let something true in.</p>
-    </div>
-    <div class="past-card">
-      <div class="past-letter">T</div>
-      <span class="past-word">The Tank</span>
-      <h3>What You Carry Is What You Pour</h3>
-      <p>You cannot give structural worth to someone else until you stop performing it and stop borrowing it. The tank has been running on performance-based worth and borrowed worth — never on structural worth. It was never full. What pours from a tank that runs on performance is more performance. The work of filling the tank is not self-care as commodity — it is identity completion.</p>
-    </div>
-  </div>
-</section>
-
-<!-- DEAL FRAMEWORK -->
-<div class="divider" id="deal"><span>Section Six · The DEAL Framework™</span></div>
-<section class="deal-section">
-  <div class="deal-header">
-    <span class="sec-label">The Solution</span>
-    <h2>The DEAL Framework™</h2>
-    <div class="deal-tagline">"Problems aren't the problem. How you DEAL with them is."</div>
-  </div>
-  <p style="font-size:0.84rem;color:var(--text-muted);max-width:680px;line-height:1.9;margin-bottom:3rem;">The DEAL Framework does not prescribe the same action for both extremes. The instruction is the same — but what that instruction requires looks completely different depending on which direction you are coming from. This is what makes it clinically precise rather than generically motivational.</p>
-  <div class="deal-grid">
-    <div class="deal-card">
-      <div class="deal-letter">D</div>
-      <span class="deal-word">Don't Resist Reality</span>
-      <h3>The First Honest Look</h3>
-      <p>Every defense mechanism in the PAST Framework is resistance to reality. D is the intervention for both extremes — from their side of it.</p>
-      <div class="deal-dual">
-        <span class="deal-dual-label">Applied dually</span>
-        <p><span>Self-authorship extreme:</span> Let it land. You were wrong. The narrative needs rewriting. You are still here. Being wrong did not kill you.</p>
-        <p><em>Empathy extreme:</em> See yourself. You have been absent from your own life. People do not know you because you never showed up to be known. Being seen will not kill you either.</p>
-      </div>
-    </div>
-    <div class="deal-card">
-      <div class="deal-letter">E</div>
-      <span class="deal-word">Embrace Discomfort</span>
-      <h3>The Swing Itself</h3>
-      <p>This is where the shame lives — and where the pendulum swing happens. The overcorrection. The unfamiliar territory. This is why the work feels worse before it feels better — and why most people quit at this stage.</p>
-      <div class="deal-dual">
-        <span class="deal-dual-label">Applied dually</span>
-        <p><span>Self-authorship extreme:</span> Sitting with "I was wrong" without converting it to blame. Thirty seconds of worthlessness that do not end them.</p>
-        <p><em>Empathy extreme:</em> Having a preference in public. Saying no. The people around them will say they have changed. They are right. The word is not selfish. The word is present.</p>
-      </div>
-    </div>
-    <div class="deal-card">
-      <div class="deal-letter">A</div>
-      <span class="deal-word">Adjust Perspective</span>
-      <h3>Where the Swing Slows</h3>
-      <p>Where the overcorrection starts to calibrate. Where the plain true thing becomes available. You were wrong and you are okay. You exist and you are allowed. Neither the greatest nor the worst. Just a person among people.</p>
-      <div class="deal-dual">
-        <span class="deal-dual-label">The reframe</span>
-        <p>Not positive thinking. Accuracy. The distortion was inaccurate in both directions. A is the return to what is simply true — without the distortion in either direction.</p>
-      </div>
-    </div>
-    <div class="deal-card">
-      <div class="deal-letter">L</div>
-      <span class="deal-word">Level Up</span>
-      <h3>The Return to Center</h3>
-      <p>Not an achievement — a return. Not to the original position. Not to the opposite extreme. To the middle. Structural worth. Just being. Present. Not performing for the future. Not managing what happened in the past.</p>
-      <div class="deal-dual">
-        <span class="deal-dual-label">The destination</span>
-        <p>The integrated person at L can be wrong without it meaning they are worthless. Can be rejected without it erasing them. Can hold shame and evaluate it — own it or set it down — without it destroying them.</p>
+      <div class="fw-card card-T reveal">
+        <div class="fw-letter">T</div>
+        <div class="fw-name">The Tank</div>
+        <div class="fw-tag">What You Carry Is What You Pour</div>
+        <p>You cannot give structural worth to someone else until you stop performing it and stop borrowing it. The tank has been running on performance and approval — never on structural worth. It was never full.</p>
+        <p>What pours from a tank that runs on performance is more performance. <em>Filling the tank is not self-care as commodity — it is identity completion.</em></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PENDULUM -->
-<div class="divider"><span>Section Seven · The Pendulum Principle</span></div>
-<section class="pendulum-section">
-  <div class="pendulum-grid">
-    <div class="pendulum-text">
-      <span class="sec-label">The Mechanism of Change</span>
-      <h2>You cannot find center<br>from a place you've<br><em>never left.</em></h2>
-      <p>The pendulum has to swing the other way before it finds center. Integration is not a straight line from one extreme to the middle. The nervous system does not work that way. The identity does not work that way. The wound does not work that way.</p>
-      <div class="pendulum-pull">
-        "The swing is not the destination. It is the necessary overcorrection that makes the middle possible."
+<!-- DEAL -->
+<section class="section deeper" id="deal">
+  <div class="container reveal">
+    <div class="section-label">The Solution</div>
+    <h2 class="section-h2">The DEAL <em>Framework™</em></h2>
+    <p class="section-intro">The DEAL Framework doesn't prescribe the same action for both extremes. The instruction is the same — but what it requires looks completely different depending on which direction you're coming from. That's what makes it clinically precise rather than generically motivational.</p>
+    <p class="fw-quote">"Problems aren't the problem. How you DEAL with them is."</p>
+    <div class="fw-grid">
+      <div class="fw-card card-D reveal" style="background:var(--navy);">
+        <div class="fw-letter">D</div>
+        <div class="fw-name">Don't Resist Reality</div>
+        <div class="fw-tag">The First Honest Look</div>
+        <p>Every defense in the PAST Framework is resistance to reality. D is the intervention for both extremes — from their own side of it.</p>
+        <div class="dual">
+          <div class="dual-label">Applied dually</div>
+          <p><b>Self-authorship:</b> Let it land. You were wrong. You're still here. Being wrong did not kill you.</p>
+          <p><b>Empathy:</b> See yourself. You've been absent from your own life. Being seen will not kill you either.</p>
+        </div>
       </div>
-      <p><strong style="color:rgba(200,90,60,0.8);font-weight:500;">For the empathy extreme:</strong> The pendulum swings toward self-authorship first — sometimes dramatically. Must overclaim before accurately claiming. The people around them will say they have changed. They are right. The word is not selfish. The word is present.</p>
-      <p><strong style="color:rgba(74,138,106,0.9);font-weight:500;">For the self-authorship extreme:</strong> The pendulum swings toward empathy first. Must feel things they have been deflecting. Must say "I was wrong" out loud and find out they are still standing. It will feel like collapse. It is the first honest thing in years.</p>
-      <p>Most people quit at E — Embrace Discomfort. They think the discomfort of the swing means they are doing it wrong. The discomfort of the swing <em style="color:var(--teal);">is</em> the doing.</p>
-    </div>
-    <div class="pendulum-vis">
-      <div class="pendulum-svg-wrap">
-        <!-- Simple pendulum arc visualization -->
-        <svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg" class="cyl-svg">
-          <!-- Arc path -->
-          <path d="M 40 30 Q 180 220 320 30" fill="none" stroke="rgba(0,200,180,0.4)" stroke-width="2"/>
-          <!-- Left extreme -->
-          <circle cx="40" cy="30" r="8" fill="none" stroke="rgba(200,90,60,0.6)" stroke-width="2"/>
-          <text x="40" y="18" text-anchor="middle" font-family="Space Mono" font-size="7" fill="rgba(200,90,60,0.7)" letter-spacing="1">SELF-AUTH</text>
-          <!-- Right extreme -->
-          <circle cx="320" cy="30" r="8" fill="none" stroke="rgba(74,138,106,0.6)" stroke-width="2"/>
-          <text x="320" y="18" text-anchor="middle" font-family="Space Mono" font-size="7" fill="rgba(74,138,106,0.8)" letter-spacing="1">EMPATHY</text>
-          <!-- Center integrated -->
-          <circle cx="180" cy="214" r="10" fill="rgba(0,200,180,0.9)" stroke="rgba(0,200,180,0.4)" stroke-width="3"/>
-          <circle cx="180" cy="214" r="20" fill="none" stroke="rgba(0,200,180,0.2)" stroke-width="1"/>
-          <text x="180" y="244" text-anchor="middle" font-family="Space Mono" font-size="7" fill="rgba(0,200,180,0.8)" letter-spacing="1">INTEGRATED</text>
-          <!-- Labels -->
-          <text x="40" y="60" text-anchor="middle" font-family="Cormorant Garamond" font-size="10" fill="rgba(200,90,60,0.5)" font-style="italic">narcissistic</text>
-          <text x="40" y="72" text-anchor="middle" font-family="Cormorant Garamond" font-size="10" fill="rgba(200,90,60,0.5)" font-style="italic">extreme</text>
-          <text x="320" y="60" text-anchor="middle" font-family="Cormorant Garamond" font-size="10" fill="rgba(74,138,106,0.6)" font-style="italic">borderline</text>
-          <text x="320" y="72" text-anchor="middle" font-family="Cormorant Garamond" font-size="10" fill="rgba(74,138,106,0.6)" font-style="italic">extreme</text>
-          <!-- Structural worth label -->
-          <text x="180" y="200" text-anchor="middle" font-family="Cormorant Garamond" font-size="9" fill="rgba(0,200,180,0.6)" font-style="italic">structural worth</text>
-        </svg>
+      <div class="fw-card card-E reveal" style="background:var(--navy);">
+        <div class="fw-letter">E</div>
+        <div class="fw-name">Embrace Discomfort</div>
+        <div class="fw-tag">The Swing Itself</div>
+        <p>Where the shame lives — and where the pendulum swings. The overcorrection. This is why the work feels worse before it feels better, and why most people quit here.</p>
+        <div class="dual">
+          <div class="dual-label">Applied dually</div>
+          <p><b>Self-authorship:</b> Sitting with "I was wrong" without converting it to blame.</p>
+          <p><b>Empathy:</b> Having a preference in public. Saying no. The word is not selfish — the word is present.</p>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- CYLINDER -->
-<div class="divider"><span>Section Eight · The Cylinder Principle</span></div>
-<section class="cylinder-section" id="cylinder">
-  <div class="cylinder-grid">
-    <div class="cylinder-text">
-      <span class="sec-label">Mercy · Grace · Truth</span>
-      <h2>Two truths.<br><em>One Truth.</em></h2>
-      <p>A horizontal cylinder lies at the corner where two walls meet. Light hits the circular end and casts a circle on one wall. Light hits the length and casts a rectangle on the other. Same object. Different angle. Both shadows one hundred percent accurate.</p>
-      <p>Neither person is lying. Neither shadow is the whole truth. The cylinder was there the entire time.</p>
-      <div class="cylinder-pull">
-        "You can be completely right about what you saw — and completely wrong about what it means."
+      <div class="fw-card card-Aa reveal" style="background:var(--navy);">
+        <div class="fw-letter">A</div>
+        <div class="fw-name">Adjust Perspective</div>
+        <div class="fw-tag">Where the Swing Slows</div>
+        <p>Where the overcorrection calibrates and the plain true thing becomes available. You were wrong and you are okay. You exist and you are allowed. Neither the greatest nor the worst.</p>
+        <div class="dual">
+          <div class="dual-label">The reframe</div>
+          <p>Not positive thinking. <b>Accuracy.</b> The distortion was inaccurate in both directions. A is the return to what is simply true.</p>
+        </div>
       </div>
-      <p><strong style="color:var(--teal);font-weight:500;">Mercy:</strong> The other person's shadow is real to them — not a lie, not a distortion for convenience. Just an incomplete angle on the same object.</p>
-      <p><strong style="color:var(--gold);font-weight:500;">Grace:</strong> Accepting that neither shadow is the whole cylinder — including your own. Staying curious about the cylinder instead of going to war over the shadows.</p>
-      <p><strong style="color:var(--text-primary);font-weight:500;">Truth:</strong> Not one person's shadow winning. Not the louder shadow or the older shadow. The cylinder itself — which neither person can see in full from where they are standing. That is not failure. That is the geometry of perspective.</p>
-    </div>
-    <div class="cylinder-vis">
-      <img 
-        src="Cylinder_of_Truth__Perspective.jpg" 
-        alt="The Cylinder of Truth: two shadows — a rectangle and a circle — both labeled THIS IS TRUE. The cylinder casting them labeled THIS IS TRUTH."
-        style="width:100%;max-width:420px;border-radius:4px;display:block;margin:0 auto;"
-      />
-    </div>
-  </div>
-
-  <!-- ACCOUNTABILITY -->
-  <div style="margin-top:3rem;">
-    <span class="sec-label">The Accountability Asymmetry</span>
-    <p style="font-size:0.84rem;color:var(--text-muted);max-width:680px;line-height:1.9;margin-bottom:2rem;">Seeing the cylinder does not obligate anyone to change. That is where accountability enters — the piece that makes the Cylinder Principle applicable to adults rather than simply philosophical.</p>
-    <div class="accountability-grid">
-      <div class="acc-card self-acc">
-        <span class="acc-tag">Self-Authorship Extreme</span>
-        <h4>Credit Without Accountability</h4>
-        <p>Takes credit enthusiastically — success, achievement, the win are fully authored. But accountability, the mirror image of credit, is nowhere. You cannot be the author of your victories and a bystander to your damage. That is not authorship. That is performance-based worth wearing the costume of authorship.</p>
-      </div>
-      <div class="acc-card emp-acc">
-        <span class="acc-tag">Empathy Extreme</span>
-        <h4>Accountability Without Credit</h4>
-        <p>Absorbs blame readily — sometimes before it is assigned. But credit, the mirror image of accountability, lands nowhere. A compliment gets deflected. An achievement attributed to luck. They cannot receive what they earned any more than the self-authorship extreme can own what they caused.</p>
-      </div>
-      <div class="acc-resolution">
-        Real authorship — structural worth in action — holds both simultaneously:<br>
-        <em>"I did something good. That was mine. I caused harm. That was also mine."</em><br>
-        Not one or the other. Both. Without the good canceling the harm.
+      <div class="fw-card card-L reveal" style="background:var(--navy);">
+        <div class="fw-letter">L</div>
+        <div class="fw-name">Level Up</div>
+        <div class="fw-tag">The Return to Center</div>
+        <p>Not an achievement — a return. Not to the original position, not to the opposite extreme. To the middle. Structural worth. Just being. Present.</p>
+        <div class="dual">
+          <div class="dual-label">The destination</div>
+          <p>The integrated person can be wrong without being worthless. Can be rejected without being erased. Can hold shame and <b>own it or set it down.</b></p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CAPACITY -->
-<div class="divider" id="capacity"><span>Section Nine · The Capacity Framework</span></div>
-<section class="capacity-section">
-  <div class="capacity-def">
-    <span class="def-label">Original Definition · Anju Redheendran · June 4, 2026</span>
-    <div class="def-text">"Maturity is the development and/or<br>expansion of a capacity."</div>
-    <div class="def-attr">© Anju Redheendran · ICU-1111 · All rights reserved</div>
-  </div>
-
-  <p style="font-size:0.84rem;color:var(--text-muted);max-width:680px;line-height:1.9;margin-bottom:2rem;">Maturity is not acting a certain way. Not reaching a certain age. Not checking certain boxes. It is the expansion of what the system is capable of — emotionally, physically, spiritually, relationally. Regression is the contraction of a capacity under load.</p>
-
-  <div class="capacity-grid">
-    <div class="cap-card">
-      <span class="cap-label">Nature + Nurture</span>
-      <h4>The Origin of Capacity</h4>
-      <p>Capacity stems from nature — raw material of temperament, sensitivity, innate wiring — AND nurture — what gets built, stunted, or never started. Neither is destiny. You cannot expand into what you have never witnessed. The nervous system learns by witnessing, then practicing, then integrating.</p>
+<!-- GO DEEPER -->
+<section class="section">
+  <div class="container reveal">
+    <div class="section-label">The Architecture Underneath</div>
+    <h2 class="section-h2">Go <em>Deeper</em></h2>
+    <p class="section-intro">PAST names the patterns. DEAL maps the way out. Beneath them sits the full clinical and philosophical architecture — the models that explain <em>why</em> the patterns form and how integration actually happens. Each gets its own full treatment soon.</p>
+    <div class="deeper-grid">
+      <div class="deep-card reveal">
+        <div class="deep-eyebrow">The Worth Typology™</div>
+        <h3>Three ways of relating to your own worth</h3>
+        <p>Performance-based worth: <em>I must generate proof.</em> Borrowed worth: <em>I must collect it from others.</em> Structural worth: <em>I simply am it.</em></p>
+        <p class="deep-insight">"Worth that requires proof is worth that can be disproven."</p>
+        <span class="deep-soon">Full framework — coming soon</span>
+      </div>
+      <div class="deep-card reveal">
+        <div class="deep-eyebrow">The Shame Typology™</div>
+        <h3>Three relationships with shame</h3>
+        <p>Shame ejected becomes blame. Shame absorbed becomes identity. Shame metabolized becomes accountability — felt, held, evaluated, then owned or set down.</p>
+        <p class="deep-insight">"What looks like confidence is often a shame-processing failure."</p>
+        <span class="deep-soon">Full framework — coming soon</span>
+      </div>
+      <div class="deep-card reveal">
+        <div class="deep-eyebrow">The Spectrum</div>
+        <h3>Self-Authorship ↔ Empathy</h3>
+        <p>A fully formed identity doesn't choose between knowing what you want and feeling what others need. It integrates both — through a boundary that discerns rather than defends. Unchecked, each pole collapses into its extreme.</p>
+        <p class="deep-insight">"Integrated: discerning and open."</p>
+        <span class="deep-soon">Full framework — coming soon</span>
+      </div>
+      <div class="deep-card reveal">
+        <div class="deep-eyebrow">The Pendulum Principle™</div>
+        <h3>The mechanism of change</h3>
+        <p>Integration isn't a straight line to the middle. The pendulum has to swing the other way before it finds center — the necessary overcorrection that makes the middle possible.</p>
+        <p class="deep-insight">"You cannot find center from a place you've never left."</p>
+        <span class="deep-soon">Full framework — coming soon</span>
+      </div>
+      <div class="deep-card reveal">
+        <div class="deep-eyebrow">The Cylinder of Truth™</div>
+        <h3>Mercy · Grace · Truth</h3>
+        <p>One cylinder casts a circle on one wall and a rectangle on another. Both shadows are 100% accurate. Neither is the whole truth. Mercy, grace, and truth are all defined by what you do with that.</p>
+        <p class="deep-insight">"You can be completely right about what you saw — and completely wrong about what it means."</p>
+        <span class="deep-soon">Full framework — coming soon</span>
+      </div>
+      <div class="deep-card reveal">
+        <div class="deep-eyebrow">The Capacity Framework™</div>
+        <h3>Maturity, defined</h3>
+        <p>An original definition: maturity is the development and/or expansion of a capacity — emotionally, physically, spiritually, relationally. Regression is its contraction under load.</p>
+        <p class="deep-insight">"You cannot expand into what you have never witnessed."</p>
+        <span class="deep-soon">Full framework — coming soon</span>
+      </div>
+      <div class="deep-card reveal">
+        <div class="deep-eyebrow">The Willingness / Exposure Grid™</div>
+        <h3>The intake diagnostic</h3>
+        <p>A 2×2 of willingness and exposure: Growth, Longing, Stagnation, Absence. A diagnosis, not a sentence — both are current states, and the Squeeze often creates willingness where none existed.</p>
+        <p class="deep-insight">"The quadrant is a diagnosis — not a sentence."</p>
+        <span class="deep-soon">Full framework — coming soon</span>
+      </div>
+      <div class="deep-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-style:dashed;">
+        <h3 style="margin-bottom:0.5rem;">The full library</h3>
+        <p style="margin-bottom:1.25rem;">Every model, fully built out, lives at the complete ICU-1111 framework library.</p>
+        <a href="https://icu-1111.com" target="_blank" rel="noopener" class="btn btn-ghost">Visit ICU-1111</a>
+      </div>
     </div>
-    <div class="cap-card">
-      <span class="cap-label">Arrested Capacity</span>
-      <h4>The Chronological Age Is Not the Emotional Age</h4>
-      <p>The behavior is always the ceiling of the current capacity. Many adults are operating at the emotional capacity of the age when the wound occurred. The forty-year-old who cannot be wrong without collapsing may be operating with the shame-processing capacity of an eight-year-old who was humiliated and never recovered.</p>
-    </div>
-    <div class="cap-card">
-      <span class="cap-label">Expansion Conditions</span>
-      <h4>What Growth Requires</h4>
-      <p>Modeling (seeing it done), safety (practice without punishment), repetition (enough attempts the new pattern becomes available without effort), integration (the point where it stops being a skill being tried and becomes something simply inhabited). A capacity is genuinely yours when it remains available under stress.</p>
-    </div>
-  </div>
-
-  <span class="sec-label" style="margin-top:2rem;display:block;">The Developmental Arc</span>
-  <div class="arc-row">
-    <div class="arc-item"><span class="arc-stage">01</span><div class="arc-name">Infant</div></div>
-    <div class="arc-item"><span class="arc-stage">02</span><div class="arc-name">Toddler</div></div>
-    <div class="arc-item"><span class="arc-stage">03</span><div class="arc-name">Young Child</div></div>
-    <div class="arc-item"><span class="arc-stage">04</span><div class="arc-name">Older Child</div></div>
-    <div class="arc-item"><span class="arc-stage">05</span><div class="arc-name">Teenager</div></div>
-    <div class="arc-item"><span class="arc-stage">06</span><div class="arc-name">Adult</div></div>
-    <div class="arc-item"><span class="arc-stage">07</span><div class="arc-name">Elder</div></div>
-  </div>
-  <p style="font-size:0.78rem;color:var(--text-dim);line-height:1.8;max-width:680px;margin:1rem 0 2rem;">Each stage has different available capacities. The teenager's feelings are adult-sized — the container is not yet. This is where many emotional wounds originate: adult experiences, adolescent capacity to process them.</p>
-
-  <div style="padding:2rem;border:1px solid rgba(201,168,76,0.2);background:var(--gold-dim);">
-    <span class="sec-label">What Becoming a Better Person Actually Means</span>
-    <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;line-height:1.6;color:var(--gold);">"Not more controlled. Not more disciplined. Not more compliant. More capable — of more things, with more people, in more circumstances."</p>
-    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:1rem;line-height:1.8;">The person who could not sit with being wrong without collapsing — and now can. That is not willpower. That is a developed capacity. The system learned something it did not know before. The container got bigger. The ceiling got higher.</p>
   </div>
 </section>
-
-<!-- PUNNETT -->
-<div class="divider"><span>Section Ten · The Willingness/Exposure Grid</span></div>
-<section class="punnett-section">
-  <div class="punnett-header">
-    <span class="sec-label">Coaching Intake Diagnostic</span>
-    <h2>The Willingness /<br>Exposure Grid</h2>
-    <p>The quadrant is a diagnosis — not a sentence. Both willingness and exposure are current states, not fixed traits. The Squeeze is often the catalyst that creates willingness where none existed.</p>
-  </div>
-
-  <div class="punnett-grid">
-    <!-- Corner blank -->
-    <div class="punnett-blank"></div>
-    <!-- Column headers -->
-    <div class="punnett-header-cell teal">Exposure: Yes<br><span style="font-size:0.5rem;opacity:0.6;letter-spacing:0.05em;">Has seen it modeled</span></div>
-    <div class="punnett-header-cell gold">Exposure: No<br><span style="font-size:0.5rem;opacity:0.6;letter-spacing:0.05em;">Has never seen it done</span></div>
-    <!-- Row 1 -->
-    <div class="punnett-row-label will-yes">Willingness: Yes</div>
-    <div class="quad growth">
-      <h4>Growth</h4>
-      <p>Full conditions for capacity expansion. The person wants to change AND has seen it modeled. This is what ICU-1111 creates. Begin the work directly.</p>
-      <div class="quad-action">→ Begin the work</div>
-    </div>
-    <div class="quad longing">
-      <h4>Longing</h4>
-      <p>Genuine desire to change, but no map. Willingness curdles into frustration and self-blame. Motivation is not the problem — they have all of it.</p>
-      <div class="quad-action">→ Provide the model first</div>
-    </div>
-    <!-- Row 2 -->
-    <div class="punnett-row-label will-no">Willingness: No</div>
-    <div class="quad stagnation">
-      <h4>Stagnation</h4>
-      <p>Has seen it done. Cost of changing exceeds cost of staying. Sealed narrative is too load-bearing to rewrite. Exposure is not the problem.</p>
-      <div class="quad-action">→ Address the willingness block</div>
-    </div>
-    <div class="quad absence">
-      <h4>Absence</h4>
-      <p>Never seen it and no interest in developing it. Most defended position — because the wound underneath is deepest. Neither condition is yet present.</p>
-      <div class="quad-action">→ Build safety first</div>
-    </div>
-  </div>
-
-  <div class="punnett-note">
-    <strong>Coaching intake application:</strong> Before session one — two questions: Is this person willing? Have they been exposed to what the alternative looks like? The answers determine exactly where to start. <strong>The Squeeze as catalyst:</strong> Most people do not enter the Willingness YES quadrant voluntarily. The Squeeze is often what creates sudden willingness where none existed. The willingness that emerges from a Squeeze is real — often more real than willingness chosen in comfort. The work that begins there is the most durable.
-  </div>
-</section>
-
-<!-- ARCHITECTURE SUMMARY -->
-<div class="divider"><span>Section Eleven · Full Architecture Summary</span></div>
-<section class="summary-section">
-  <span class="sec-label">The Complete System</span>
-  <div class="summary-grid">
-    <div class="summary-col past">
-      <h3>The PAST Framework™ — The Diagnostic</h3>
-      <ul class="summary-list">
-        <li><strong style="color:var(--gold);">P — The Pairing:</strong> Complementary wound management. One assigns blame, one receives it. Two distortions that fit together like a lock and key. Neither chooses consciously — both choose by wound.</li>
-        <li><strong style="color:var(--gold);">A — The Audition:</strong> Performing for love instead of receiving it. Worth generated through proof. Love as transaction. Presence traded for rehearsal.</li>
-        <li><strong style="color:var(--gold);">S — The Squeeze:</strong> Pressure reveals unattended truth. Reality breaks through anyway. The body files the report. Not failure — initiation.</li>
-        <li><strong style="color:var(--gold);">T — The Tank:</strong> What you carry is what you pour. Cannot give structural worth until you stop performing it and stop borrowing it.</li>
-      </ul>
-    </div>
-    <div class="summary-col deal">
-      <h3>The DEAL Framework™ — The Solution</h3>
-      <ul class="summary-list">
-        <li><strong style="color:var(--teal);">D — Don't resist reality:</strong> The first honest look — from your side of it. For both extremes: the moment the distortion is named, reality has already entered.</li>
-        <li><strong style="color:var(--teal);">E — Embrace discomfort:</strong> The swing itself. The overcorrection. The unfamiliar territory. Most people quit here. The discomfort is the doing.</li>
-        <li><strong style="color:var(--teal);">A — Adjust perspective:</strong> The swing slows. The plain true thing becomes available. Accurate, not positive. Just what is actually true.</li>
-        <li><strong style="color:var(--teal);">L — Level up:</strong> The return to center. Structural worth. Presence. Just being. Not performing. Not borrowing. Just here.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="destination">
-    <span class="dest-label">The Destination</span>
-    <h2>You are the author<br>of your own story —<br><em>not a character in someone else's.</em></h2>
-    <p>When self-authorship and empathy are integrated through a living boundary, identity is no longer performed for approval, earned through suffering, or given away in the name of love. It is simply inhabited. Structural worth. Just being. Present.</p>
-  </div>
-</section>
-
-</div><!-- /wrap -->
 
 <!-- CTA -->
-<section class="cta-section">
-  <div class="wrap">
-    <span class="sec-label" style="display:block;text-align:center;margin-bottom:1.5rem;">Begin the Work</span>
-    <h2>Ready to read the accounting?</h2>
+<section class="section cta">
+  <div class="container cta-inner reveal">
+    <h2>Ready to read the <em>accounting?</em></h2>
     <p>A 30-minute discovery call to map your patterns and identify where your identity system is drifting — and where it's ready to expand.</p>
-    <div class="cta-btns">
-      <a href="https://calendly.com/icu1111/30-min-discovery-call" class="btn-p">Book a Discovery Call</a>
-      <a href="personal.html" class="btn-g">Coaching Version →</a>
-      <a href="https://icu-1111.com" class="btn-g">Return to ICU-1111</a>
+    <div class="cta-actions">
+      <a href="https://calendly.com/icu1111/30-min-discovery-call" target="_blank" rel="noopener" class="btn btn-primary">Book a discovery call</a>
+      <a href="https://anjuredheendran.com" class="btn btn-ghost">About Anju</a>
     </div>
   </div>
 </section>
 
-<!-- FRAMEWORK NAV -->
-<div class="wrap">
-  <div class="framework-nav">
-    <a href="#" class="active">Full Architecture</a>
-    <a href="personal.html">Coaching Version</a>
-    <a href="https://anjuredheendran.com">Anju's Site</a>
-    <a href="https://icu-1111.com">ICU-1111</a>
-  </div>
-</div>
-
+<!-- FOOTER -->
 <footer>
-  <span>© Anju Redheendran · ICU-1111 · IP Architecture v1.2 · June 2026 · All rights reserved</span>
-  <span><a href="https://anjuredheendran.com">anjuredheendran.com</a></span>
+  <div class="container">
+    <div class="footer-name">Anju Redheendran</div>
+    <div class="footer-tag">Understand your PAST. Learn to DEAL with it.™</div>
+    <div class="footer-links">
+      <a href="https://anjuredheendran.com">Home</a>
+      <a href="https://icu-1111.com" target="_blank" rel="noopener">ICU-1111</a>
+      <a href="https://calendly.com/icu1111/30-min-discovery-call" target="_blank" rel="noopener">Discovery Call</a>
+    </div>
+    <div class="footer-copy">© 2026 Anju Redheendran · ICU-1111 · All frameworks proprietary and in trademark queue.<br>The PAST Framework™ · The DEAL Framework™ · The Capacity Framework™</div>
+  </div>
 </footer>
 
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}}),{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
